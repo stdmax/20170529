@@ -66,9 +66,8 @@ var getTodoApp = function (holderId, undefined) {
 				.on('keyup blur change', '.edit', function (event) {
 					var index = self.getIndexByHash(getClosestHash(this)),
 						form = $(this).closest('form');
-					self.setItemText(index, $(this).val());
 					if ('focusout' == event.type || ('keyup' == event.type && 13 == event.which)) {
-						self.setActiveItem(-1).show().update(form);
+						self.setItemText(index, $(this).val()).setActiveItem(-1).show().update(form);
 					}
 					event.preventDefault();
 				})
@@ -153,6 +152,7 @@ var getTodoApp = function (holderId, undefined) {
 				delete _data.map[_data.items[index].hash];
 				_data.map[hash] = index;
 				_data.items[index].text = text;
+				_data.items[index].hash = hash;
 			}
 
 			return this;
