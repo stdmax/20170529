@@ -153,8 +153,6 @@ var getTodoApp = function (holderId, undefined) {
 				delete _data.map[_data.items[index].hash];
 				_data.map[hash] = index;
 				_data.items[index].text = text;
-			} else {
-				this.removeItem(index);
 			}
 
 			return this;
