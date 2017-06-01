@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Template • TodoMVC</title>
+		<link rel="stylesheet" href="node_modules/todomvc-app-css/index.css">
+		<!-- CSS overrides - remove if you don't need it -->
+		<link rel="stylesheet" href="css/app.css">
+	</head>
+	<body>
+		<section class="todoapp" id="todoapp">
+			<form name="init" action="error.html" method="post">
+				<input type="hidden" name="action" value="init" />
+			</form>
+		</section>
+		<footer class="info">
+			<p>Double-click to edit a todo</p>
+			<!-- Remove the below line ↓ -->
+			<p>Template by <a href="http://sindresorhus.com">Sindre Sorhus</a></p>
+			<!-- Change this out with your name and url ↓ -->
+			<p>Created by <a href="http://todomvc.com">you</a></p>
+			<p>Part of <a href="http://todomvc.com">TodoMVC</a></p>
+		</footer>
+
+		<script id="login_tmpl" type="text/x-jsrender">
+			<header class="header">
+				<h2>Авторизация</h2>
+			</header>
+			<form name="login" action="error.html" method="post">
+				{{if message}}
+					<section class="message">
+						<p>{{>message}}</p>
+					</section>
+				{{/if}}
+				<section class="main">
+					<ul class="form">
+						<li>
+							<label for="input_login">Логин:</label>
+							<input id="input_login" name="login" type="text" value="{{if login}}{{>login}}{{/if}}" autofocus="autofocus" required="required" placeholder="login" />
+						</li>
+						<li>
+							<label for="input_password">Пароль:</label>
+							<input id="input_password" name="password" type="password" />
+						</li>
+						<li class="submit">
+							<input type="submit" value="Войти" />
+						</li>
+					</ul>
+				</section>
+				<input type="hidden" name="action" value="login" />
+			</form>
+			<form name="register" action="error.html" method="post">
+				<section class="main">
+					<ul class="form">
+						<li>
+							<input type="submit" value="Регистрация" />
+						</li>
+					</ul>
+				</section>
+				<input type="hidden" name="action" value="register" />
+			</form>
+		</script>
+
+		<script id="register_tmpl" type="text/x-jsrender">
+			<header class="header">
+				<h2>Регистрация</h2>
+			</header>
+			<form name="register" action="error.html" method="post">
+				{{if message}}
+					<section class="message">
+						<p>{{>message}}</p>
+					</section>
+				{{/if}}
+				<section class="main">
+					<ul class="form">
+						<li>
+							<label for="input_login">Новый логин:</label>
+							<input id="input_login" name="login" type="text" value="{{if login}}{{>login}}{{/if}}" autofocus="autofocus" required="required" placeholder="login" />
+						</li>
+						<li>
+							<label for="input_password">Пароль:</label>
+							<input id="input_password" name="password" type="password" />
+						</li>
+						<li class="submit">
+							<input type="submit" value="Зарегистрироваться" />
+						</li>
+					</ul>
+				</section>
+				<input type="hidden" name="action" value="register" />
+			</form>
+			<form name="login" action="error.html" method="post">
+				<section class="main">
+					<ul class="form">
+						<li>
+							<input type="submit" value="Авторизация" />
+						</li>
+					</ul>
+				</section>
+				<input type="hidden" name="action" value="login" />
+			</form>
+		</script>
+
+		<script id="items_tmpl" type="text/x-jsrender">
+			<form name="logout" action="error.html" method="post">
+				<section class="logout">
+						<section class="main">
+							<ul class="form">
+								<li>
+									<input type="submit" value="Выйти ({{>user.login}})" />
+								</li>
+							</ul>
+						</section>
+						<input type="hidden" name="action" value="logout" />
+				</section>
+			</form>
+			<form name="store" action="error.html" method="post">
+				<header class="header">
+					<h1>Todos</h1>
+					<input class="new-todo" placeholder="What needs to be done?" autofocus>
+				</header>
+
+				<!-- This section should be hidden by default and shown when there are todos -->
+				<section class="main">
+					<input class="toggle-all" type="checkbox" {{if isAllCompleted}}checked="checked"{{/if}} />
+					<label for="toggle-all">Mark all as complete</label>
+					<ul class="todo-list">
+						<!-- These are here just to show the structure of the list items -->
+						<!-- List items should get the class `editing` when editing and `completed` when marked as completed -->
+
+						{{for items}}
+							<li class="
+								{{if isComplete}}completed{{/if}}
+								{{if ~root.activeItemIndex == index}}editing{{/if}}
+								" data-item-hash="{{>hash}}">
+								<div class="view">
+									<input class="toggle" type="checkbox" {{if isComplete}}checked="checked"{{/if}} />
+									<label>{{>text}}</label>
+									<button class="destroy"></button>
+								</div>
+								<input class="edit" value="{{>text}}">
+							</li>
+						{{/for}}
+					</ul>
+				</section>
+
+				<!-- This footer should hidden by default and shown when there are todos -->
+				<footer class="footer">
+					<!-- This should be `0 items left` by default -->
+					<span class="todo-count"><strong>{{:itemLeftCount}}</strong> item left</span>
+					<!-- Remove this if you don't implement routing -->
+					<ul class="filters">
+						{{props filters}}
+							<li>
+								<a {{if key == ~root.filter}}class="selected"{{/if}} href="#/{{>key}}">{{>prop.title}}</a>
+							</li>
+						{{/props}}
+					</ul>
+					<!-- Hidden if no completed items are left ↓ -->
+					<button class="clear-completed">Clear completed</button>
+				</footer>
+				<input type="hidden" name="items" value="{}" />
+				<input type="hidden" name="action" value="store" />
+			</form>
+		</script>
+
+		<!-- Scripts here. Don't remove ↓ -->
+		<script src="node_modules/jquery/dist/jquery.min.js"></script>
+		<script src="node_modules/jsrender/jsrender.min.js"></script>
+		<script src="node_modules/js-md5/build/md5.min.js"></script>
+		<script src="js/app.js"></script>
+	</body>
+</html>

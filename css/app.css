@@ -1,0 +1,37 @@
+.todoapp h2 {
+	position: absolute;
+	top: -155px;
+	width: 100%;
+	font-size: 80px;
+	font-weight: 100;
+	text-align: center;
+	color: rgba(39, 179, 160, 0.74);
+	-webkit-text-rendering: optimizeLegibility;
+	-moz-text-rendering: optimizeLegibility;
+	text-rendering: optimizeLegibility;
+}
+.form {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+.form li {
+	position: relative;
+	font-size: 24px;
+	border-bottom: 1px solid #ededed;
+	padding: 20px;
+}
+.form li.submit {
+	background-color: #ededed;
+}
+.message {
+	position: relative;
+	z-index: 2;
+	color: #ffffff;
+	background-color: #ff4400;
+	padding: 10px 20px;
+}
+[for=toggle-all],
+.toggle {
+	cursor: pointer;
+}
